@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <context-param>
+        <param-name>xml-reports-directory</param-name>
+        <param-value>/etc/storage-reports</param-value>
+    </context-param>
+
+    <!-- 
+   resteasy support
+   http://docs.jboss.org/resteasy/docs/3.0.4.Final/userguide/html_single/index.html#javax.ws.rs.core.Application
+    -->        
+    <context-param>
+        <description>Automatically scan WEB-INFlib jars and WEB-INFclasses directory 
+            for both Provider and JAX-RS resource classes (Path, GET, POST etc..) 
+            and register them </description>
+        <param-name>resteasy.scan</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <context-param>
+        <description>
+            The resteasy.servlet.mapping.prefix context param variable must 
+            be set if your servlet-mapping for the Resteasy servlet 
+            has a url-pattern other than /*
+        </description>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rst</param-value>
+    </context-param>
+    
+    <servlet>
+        <servlet-name>Resteasy</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+        <init-param>
+            <param-name>javax.ws.rs.Application</param-name>
+            <param-value>squidadm.www.rest.App</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Resteasy</servlet-name>
+        <url-pattern>/rst/*</url-pattern>
+    </servlet-mapping>
+
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+
+</web-app>

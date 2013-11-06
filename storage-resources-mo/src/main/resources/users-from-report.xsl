@@ -13,7 +13,9 @@
 
     <xsl:template match="GroupInfo">
 	<user>
-	    <xsl:value-of select="@Name"/>
+	    <name>
+	        <xsl:value-of select="@Name"/>
+	    </name>
 	</user>
     </xsl:template>
  

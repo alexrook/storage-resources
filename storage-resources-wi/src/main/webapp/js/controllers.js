@@ -13,13 +13,13 @@ angular.module('sres.controllers', []).
                         var url='',method='';
                         if (window.durl) {
                             url=window.durl;
-                            method='jsonp'
+                            //method='jsonp'
                         } else {
                             url='rest/users';
-                            method='get';
+                            //method='get';
                         }
                         
-                        $http[method](url).success(function(data) {
+                        $http.get(url).success(function(data) {
                             var users = data.users ? data.users : data;
                             for (var i = 0; i < users.length; i++) {
                                 users[i].id = i+1;
@@ -29,4 +29,11 @@ angular.module('sres.controllers', []).
                         });
 
 
+                    }]).
+        controller('ReportCtrl',
+                ['$scope', '$http','$routeParams',
+                    function($scope, $http,$routeParams) {
+                        console.log($routeParams);
                     }]);
+        
+        

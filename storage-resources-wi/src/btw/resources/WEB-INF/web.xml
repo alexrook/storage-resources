@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" 
-    xmlns="http://java.sun.com/xml/ns/javaee" 
-    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+         xmlns="http://java.sun.com/xml/ns/javaee" 
+         xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <context-param>
         <param-name>config-dir</param-name>
@@ -13,6 +13,37 @@
     <context-param>
         <param-name>users-list-file-name</param-name>
         <param-value>users.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>bigfiles-xsl</param-name>
+        <param-value>big-files.xsl</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>bigfiles-xml</param-name>
+        <param-value>big-files-source.xml</param-value>
+    </context-param>
+    
+    
+    <context-param>
+        <param-name>bytypefiles-xsl</param-name>
+        <param-value>by-type-files.xsl</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>bytypefiles-xml</param-name>
+        <param-value>by-type-files-source.xml</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>duplicatefiles-xsl</param-name>
+        <param-value>duplicate-files.xsl</param-value>
+    </context-param>
+
+    <context-param>
+        <param-name>duplicatefiles-xml</param-name>
+        <param-value>duplicate-files-source.xsl</param-value>
     </context-param>
 
     <filter>
@@ -30,7 +61,7 @@
 
     <filter-mapping>
         <filter-name>JSONP</filter-name>
-        <url-pattern>/rst/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </filter-mapping>
 
     <welcome-file-list>

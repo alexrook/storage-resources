@@ -9,7 +9,17 @@ angular.module('sres.controllers', []).
 
                         $scope.users = [];
                         $scope.counter = 0;
-                        $http.get('rest/users').success(function(data) {
+                        
+                        var url='',method='';
+                        if (window.durl) {
+                            url=window.durl;
+                            method='jsonp'
+                        } else {
+                            url='rest/users';
+                            method='get';
+                        }
+                        
+                        $http[method](url).success(function(data) {
                             var users = data.users ? data.users : data;
                             for (var i = 0; i < users.length; i++) {
                                 users[i].id = i+1;

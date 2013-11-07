@@ -17,12 +17,11 @@ public class User {
     public void setName(String name) {
         if (name != null) {
             if (name.contains("\\")) { //DOMAIN\ username
-                name = name.substring(name.lastIndexOf("\\")+1);
+                name = name.substring(name.lastIndexOf("\\") + 1);
             }
             if (name.contains("@")) {//username@DOMAIN
                 name = name.substring(0, name.indexOf("@"));
             }
-
             this.Name = name;
         }
 

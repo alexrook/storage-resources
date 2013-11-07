@@ -18,7 +18,7 @@ public class XMLObjectsTest {
     private static final Logger log = Logger.getLogger("test.XMLObjectsTest");
     private static final String TMP_FILE_EXT = "_XMLObjectsTest.tmp.xml";
     private Collection<User> fixtureUsers;
-    private Collection<File> tmpfiles;
+   
 
     @Before
     public void fixtureForTests() {

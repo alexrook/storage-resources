@@ -31,15 +31,14 @@
         <dependencies>
 
             <dependency>
-                <groupId>squid-adm</groupId>
-                <artifactId>squid-adm-www</artifactId>
+                <groupId>storage-resources</groupId>
+                <artifactId>storage-resources-mo</artifactId>
                 <version>${project.version}</version>
             </dependency>
             
-
             <dependency>
-                <groupId>squid-adm</groupId>
-                <artifactId>squid-adm-conf</artifactId>
+                <groupId>storage-resources</groupId>
+                <artifactId>storage-resources-wi</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

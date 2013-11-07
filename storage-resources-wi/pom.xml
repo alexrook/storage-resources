@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -9,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>squid-resources-wi</artifactId>
+    <artifactId>storage-resources-wi</artifactId>
     <packaging>war</packaging>
 
     <name>storage-resources-wi</name>
@@ -20,6 +21,11 @@
     
     <dependencies>
     
+        <dependency>
+            <groupId>storage-resources</groupId>
+            <artifactId>storage-resources-mo</artifactId>
+        </dependency>
+        
         <dependency>
             <groupId>org.jboss.spec.javax.servlet</groupId>
             <artifactId>jboss-servlet-api_3.0_spec</artifactId>
@@ -32,30 +38,66 @@
             <artifactId>jboss-jaxrs-api_1.1_spec</artifactId>
             <scope>provided</scope>
         </dependency>
-        
-        
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-servlet-initializer</artifactId>
-            <version>3.0.4.Final</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jackson-provider</artifactId>
-            <version>3.0.4.Final</version>
-        </dependency>
-        
-        
+         
     </dependencies>
     
     <profiles>
         <profile>
             <id>prod</id>
+            
+            <dependencies>
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-servlet-initializer</artifactId>
+                    <version>3.0.4.Final</version>
+                </dependency>
+        
+                <dependency>
+                    <groupId>org.jboss.resteasy</groupId>
+                    <artifactId>resteasy-jackson-provider</artifactId>
+                    <version>3.0.4.Final</version>
+                </dependency>
+            </dependencies>
+            
             <build>
-                <finalName>squid-adm</finalName>
+                <finalName>storage-resources</finalName>
             </build>
         </profile>
+        
+        <profile>
+            <id>build-test-war</id>
+            <build>
+                <plugins>
+
+                    <plugin>
+                        <!-- 
+                            this plugin don't support maven 3.1.0
+                            see more https://cwiki.apache.org/confluence/display/MAVEN/AetherClassNotFound
+                        -->
+                        <groupId>org.jboss.as.plugins</groupId>
+                        <artifactId>jboss-as-maven-plugin</artifactId>
+                        <!-- 7.4 version has  local jboss start&stop feature-->
+                        <version>7.4.Final</version>
+                    </plugin>
+
+                    <plugin>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <configuration>
+                            <webResources>
+                                <resource>
+                                    <directory>src/btw/resources</directory> 
+                                    <filtering>true</filtering>
+                                </resource>   
+                            </webResources>
+                        </configuration>
+                    </plugin>
+
+                </plugins>
+            </build>
+        </profile>
+        
     </profiles>
+    
+    
     
 </project>

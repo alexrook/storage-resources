@@ -12,11 +12,9 @@
                         <tr data-ng-repeat="user in users">
                             <td>{{user.id}}</td>
                             <td>
-                            <!--a href="#/reports?username={{user.name}}&reporttype=bigfiles">{{user.name}}</a-->
-                                <a
-                                   data-ng-href="#/reports/bytypefiles?reporttype=bytypefiles&user={{user.name}}">
-                                    {{user.name}}
-                                </a> 
+                            <a
+                                data-ng-href="#/bytypefiles?user={{user.name}}&reporttype=bytypefiles">
+                                   {{user.name}}</a>
                             </td>
                         </tr>
                     </tbody>

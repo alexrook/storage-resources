@@ -55,7 +55,7 @@
         </init-param>
         <init-param>
             <param-name>exposeHeadersList</param-name>
-            <param-value>X-Sites-Count</param-value>
+            <param-value></param-value>
         </init-param>
     </filter>
 

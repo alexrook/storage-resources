@@ -1,13 +1,8 @@
 <div id="main" class="container">
+    <div data-ng-include src="'partials/reports/reports.html'"
+         data-ng-controller='ReportCtrl'></div>
     <div class="row">
-        <div class="col-lg-12">
-            <h3>{{report.header.title}}</h3>
-            <ul>
-                <li>Выборка для: {{report.header.generatedFor}}</li>
-                <li>Время создания: {{report.header.generatedAt}}</li>
-                <li data-ng-show='report.header.warnings'>{{report.header.warnings}}</li>
-                <li>Параметры отчета: {{report.header.filters.filter.name}}: {{report.header.filters.filter.value}}</li>
-            </ul>
+         <div class="col-lg-12">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -25,6 +20,6 @@
                         </tr>
                     </tbody>
             </table>
-        </div>
-    </div><!--//row with table-->
-</div> <!-- //main -->
+        </div><!-- //col -->
+    </div>
+</div>

@@ -36,7 +36,8 @@ angular.module('sres.controllers', []).
                         
                         console.log($routeParams);
                         $scope.report={};
-                                                
+                        $scope.user=$routeParams.user;
+                        
                         var url='',method='';
                         if (window.urlBase) {
                             url=window.urlBase+'/'+'rest/reports';

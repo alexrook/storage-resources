@@ -1,0 +1,55 @@
+<div id="main" class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="glyphicon glyphicon-chevron-left" href="#/users">
+                Назад к списку пользоватетелей
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+            <h3>{{report.header.title}}</h3>
+            <ul>
+                <li>Выборка для:
+                    <span class="label label-success">{{report.header.generatedFor}}</span>
+                </li>
+                <li>Время создания: {{report.header.generatedAt}}</li>
+                <li data-ng-show='report.header.warnings'>
+                    <span class="label label-warning">Внимание!</span>
+                   <em class="text-warning">{{report.header.warnings.warning}}</em>
+                </li>
+                <li>Параметры отчета:
+                    <em class="text-info">
+                        {{report.header.filters.filter.name}}: {{report.header.filters.filter.value}}
+                    </em>
+                </li>
+            </ul>
+            </div>
+            <ul>
+                <li data-ng-repeat="gr in report.groups.group" data-ng-show="gr.files">
+                    <h4><span class="label label-primary">{{gr.name}}</span></h4>
+                    <table class="table table-hover" data-ng-show="gr.files">
+                        <thead>
+                            <tr>
+                                <th>имя</th>
+                                <th>владелец</th>
+                                <th>last access</th>
+                                <th>Путь</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="f in gr.files.file">
+                                    <td>{{f.name}}</td>
+                                    <td>{{f.owner}}</td>
+                                    <td>{{f["last-access"]}}</td>
+                                    <td>{{f.path}}</td>
+                                </tr>
+                            </tbody>
+                    </table>
+                </li>
+            </ul>
+        </div>
+    </div><!--//row with table-->
+</div> <!-- //main -->
+

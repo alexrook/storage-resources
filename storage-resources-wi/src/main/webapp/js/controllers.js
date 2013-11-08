@@ -8,11 +8,11 @@ angular.module('sres.controllers', []).
                     function($scope, $http) {
 
                         $scope.users = [];
-                        $scope.counter = 0;
+                        
                         
                         var url='',method='';
-                        if (window.durl) {
-                            url=window.durl;
+                        if (window.urlBase) {
+                            url=window.urlBase+'/'+'rest/users';
                             //method='jsonp'
                         } else {
                             url='rest/users';
@@ -33,7 +33,43 @@ angular.module('sres.controllers', []).
         controller('ReportCtrl',
                 ['$scope', '$http','$routeParams',
                     function($scope, $http,$routeParams) {
+                        
                         console.log($routeParams);
+                        $scope.report={};
+                                                
+                        var url='',method='';
+                        if (window.urlBase) {
+                            url=window.urlBase+'/'+'rest/reports';
+                        } else {
+                            url='rest/reports';
+                        }
+                        
+                        function cleanup(report){
+                            if (report._type==='ByTypeFiles') {
+                                for (var i=0;i<report.groups.group.length;i++){
+                                    if (report.groups.group[i].files) {
+                                        if (!angular.isArray(report.groups.group[i].files.file))
+                                        {
+                                            report.groups.group[i].files.file=
+                                            new Array(
+                                                    report.groups.group[i].files.file
+                                                    );
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            return report;
+                        }
+                        
+                        $http.get(url,{params:$routeParams}).success(function(data) {
+                             var x2js = new X2JS();
+                             var jsonObj = x2js.xml_str2json(data);
+                             console.log(jsonObj);
+                             var ret=cleanup(jsonObj.report);
+                             $scope.report=ret;
+                        });
+                        
                     }]);
         
         

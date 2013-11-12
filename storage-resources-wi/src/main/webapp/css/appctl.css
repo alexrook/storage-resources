@@ -7,6 +7,7 @@
 }
 .navbar a{
     color: #fff;
+    text-decoration: underline;
 }
 footer.navbar {
     min-height:1px;

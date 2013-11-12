@@ -3,13 +3,23 @@
 /* Controllers */
 
 angular.module('sres.controllers', []).
+        controller('IdxCtrl',
+                ['$scope', 'shared',
+                    function($scope, shared) {
+                        shared.addListener(function(data){
+                            $scope.reportTypes=shared.getReportTypes();
+                            
+                        },'reporttypes');
+                        shared.addListener(function(data){
+                            $scope.user=shared.getUser();
+                        },'user');
+                    }]).
         controller('UserCtrl',
-                ['$scope', '$http',
-                    function($scope, $http) {
+                ['$scope', '$http','shared',
+                    function($scope, $http,shared) {
 
                         $scope.users = [];
-                        
-                        
+
                         var url='',method='';
                         if (window.urlBase) {
                             url=window.urlBase+'/'+'rest/users';
@@ -27,17 +37,48 @@ angular.module('sres.controllers', []).
                                
                                $scope.users=users;
                         });
-
-
                     }]).
-        controller('ReportCtrl',
-                ['$scope', '$http','$routeParams',
-                    function($scope, $http,$routeParams) {
+        controller('ReportWrapCtrl',
+                ['$scope', '$http','$routeParams','shared',
+                    function($scope, $http,$routeParams,shared) {
+                        
+                        console.log($routeParams);
+                        
+                        shared.addListener(function(){
+                            $scope.report=shared.getReport();
+                        },'report');
+                        
+                        var reportTypes=[{ //todo: $http.get(...)...
+                                name:"Большие файлы",
+                                type:"bigfiles"
+                                },
+                            {
+                                name:"Файлы по группам",
+                                type:"bytypefiles"
+                                }/*,
+                            {
+                                name:"Дубликаты файлов",
+                                type:"duplicatefiles"
+                            }*/];
+                        
+                        shared.setReportTypes(reportTypes);
+                        shared.setUser($routeParams.user);
+                        
+                        if (!$routeParams.reporttype) {
+                            $routeParams.reporttype=reportTypes[0].type;
+                        }
+                        $scope.reportBodyInc='partials/reports/'
+                                        +$routeParams.reporttype+'.html';
+                        
+                        
+                    }]).
+        controller('ReportBodyCtrl',
+                ['$scope', '$http','$routeParams','shared',
+                    function($scope, $http,$routeParams,shared) {
                         
                         console.log($routeParams);
                         $scope.report={};
                         $scope.user=$routeParams.user;
-                        window.user=$routeParams.user;
                         var url='',method='';
                         if (window.urlBase) {
                             url=window.urlBase+'/'+'rest/reports';
@@ -68,6 +109,7 @@ angular.module('sres.controllers', []).
                              var jsonObj = x2js.xml_str2json(data);
                              console.log(jsonObj);
                              var ret=cleanup(jsonObj.report);
+                             shared.setReport(ret);
                              $scope.report=ret;
                         });
                         

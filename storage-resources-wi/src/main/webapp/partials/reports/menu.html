@@ -1,19 +1,8 @@
 <ul class="nav navbar-nav">
-   
-    <li>
-        <a data-ng-href="#/bigfiles?user={{window.user.name}}&reporttype=bigfiles">
-            Большие файлы</a>
+    <li data-ng-repeat='reportType in reportTypes'> 
+        <a data-ng-href='#/reports?user={{user}}&reporttype={{reportType.type}}'>
+            {{reportType.name}}</a>
     </li>
-   
-    <li>
-        <a data-ng-href="#/bytypefiles?user={{window.user.name}}&reporttype=bytypefiles">
-            Файлы по группам</a>
-    </li>
-   
-    <li>
-        <a data-ng-href="#/duplicatefiles?user={{user.name}}&reporttype=duplicatefiles">
-            Файлы дубликаты</a>
-    </li> 
        
 </ul>
         

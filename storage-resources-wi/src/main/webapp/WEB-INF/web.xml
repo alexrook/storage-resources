@@ -42,7 +42,7 @@
 
     <context-param>
         <param-name>duplicatefiles-xml</param-name>
-        <param-value>duplicate-files-source.xsl</param-value>
+        <param-value>duplicate-files-source.xml</param-value>
     </context-param>
 
     <!-- 

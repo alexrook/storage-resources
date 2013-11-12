@@ -6,13 +6,15 @@ angular.module('sres.controllers', []).
         controller('IdxCtrl',
                 ['$scope', 'shared',
                     function($scope, shared) {
+                        console.log('Idx ');
                         shared.addListener(function(data){
                             $scope.reportTypes=shared.getReportTypes();
-                            
                         },'reporttypes');
+                        
                         shared.addListener(function(data){
                             $scope.user=shared.getUser();
                         },'user');
+                      
                     }]).
         controller('UserCtrl',
                 ['$scope', '$http','shared',
@@ -55,11 +57,11 @@ angular.module('sres.controllers', []).
                             {
                                 name:"Файлы по группам",
                                 type:"bytypefiles"
-                                }/*,
+                                },
                             {
                                 name:"Дубликаты файлов",
                                 type:"duplicatefiles"
-                            }*/];
+                            }];
                         
                         shared.setReportTypes(reportTypes);
                         shared.setUser($routeParams.user);

@@ -5,6 +5,7 @@
                href="#/users"> Назад к списку пользователей</a>
         </div>
     </div>
+   
     <div class="row">
         <div class="col-lg-12">
             <div class="page-header">
@@ -18,7 +19,7 @@
                         <span class="label label-warning">Внимание!</span>
                         <em class="text-warning">{{report.header.warnings.warning}}</em>
                     </li>
-                    <li>Параметры отчета:
+                    <li data-ng-show='report.header.filters'>Параметры отчета:
                         <em class="text-info">
                             {{report.header.filters.filter.name}}: {{report.header.filters.filter.value}}
                         </em>
@@ -27,5 +28,7 @@
             </div>
         </div>
     </div>
-    <div data-ng-include src='reportBodyInc' data-ng-controller='ReportBodyCtrl'></div>
+    <div data-ng-include
+         src='reportBodyInc'
+         data-ng-controller='ReportBodyCtrl'></div>
 </div>

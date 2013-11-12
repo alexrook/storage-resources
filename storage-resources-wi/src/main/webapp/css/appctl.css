@@ -13,3 +13,8 @@ footer.navbar {
     min-height:1px;
 }
 
+.mbadge {
+  background-color: white;
+  color: #428bca;
+}
+

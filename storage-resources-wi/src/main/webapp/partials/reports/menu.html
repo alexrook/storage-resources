@@ -1,4 +1,4 @@
-<ul class="nav navbar-nav">
+<ul class="nav navbar-nav" data-ng-show='showmenu'>
     <li data-ng-repeat='reportType in reportTypes'> 
         <a data-ng-href='#/reports?user={{user}}&reporttype={{reportType.type}}'>
             {{reportType.name}}</a>

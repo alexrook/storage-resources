@@ -8,7 +8,8 @@ angular.module('sres.services', []).
         var reportTypes=[],
             listeners={},
             user={},
-            report={};
+            report={},
+            state='';
         
         function callListeners(event,data) {
             if (listeners[event]) {
@@ -47,6 +48,14 @@ angular.module('sres.services', []).
             },
             getReport:function(){
                 return report;
+            },
+            setState:function(data){
+                state=data;
+                console.log(data);
+                callListeners('state',data);
+            },
+            getState:function(data){
+                return state;
             }
         };    
         

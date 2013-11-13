@@ -2,14 +2,14 @@
 
 
 // Declare app level module 
-angular.module('sres', ['sres.controllers','sres.services']).
-  config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/reports',
+angular.module('sres', ['sres.controllers', 'sres.services']).
+        config(['$routeProvider', function($routeProvider) {
+                $routeProvider.when('/reports',
                         {templateUrl: 'partials/reports/reports.html',
-                         controller: 'ReportWrapCtrl'});
- 
-    $routeProvider.when('/users',
+                            controller: 'ReportWrapCtrl'});
+
+                $routeProvider.when('/users',
                         {templateUrl: 'partials/users.html', controller: 'UserCtrl'});
-    
-    $routeProvider.otherwise({redirectTo: '/users'});
-  }]);
+
+                $routeProvider.otherwise({redirectTo: '/users'});
+            }]);

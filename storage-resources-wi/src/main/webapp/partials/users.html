@@ -7,17 +7,17 @@
                         <th>#</th>
                         <th>account</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                        <tr data-ng-repeat="user in users">
-                            <td>{{user.id}}</td>
-                            <td>
-                                <a data-ng-href="#/reports?user={{user.name}}">
-                                    {{user.name}}
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="user in users">
+                        <td>{{user.id}}</td>
+                        <td>
+                            <a data-ng-href="#/reports?user={{user.name}}">
+                                {{user.name}}
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div><!--//row with table-->

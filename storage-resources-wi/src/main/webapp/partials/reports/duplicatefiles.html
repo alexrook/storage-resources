@@ -1,36 +1,36 @@
 <div class="row">
-        <div class="col-lg-12">
-            <ul>
-                <li data-ng-repeat="gr in report['dublicate-groups'].group">
-                        <div class="list-group"></div>
-                    <div class="list-group-item active">
-                        <h4 class="list-group-item-heading">
-                                <span class="badge mbadge">Имя:&nbsp;&nbsp;{{gr.name}}</span>
-                                <span class="badge mbadge pull-right">
-                                 Размер:&nbsp;&nbsp;{{gr['file-size']}}       
-                                </span>
-                        </h4>
-                    </div>
-                    <table class="table table-hover list-group-item"
-                           data-ng-show="gr.files">
-                        <thead>
-                            <tr>
-                                <th>владелец</th>
-                                <th>last access</th>
-                                <th>Путь</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-ng-repeat="f in gr.files.file">
-                                    <td>{{f.owner}}</td>
-                                    <td>{{f["last-access"]}}</td>
-                                    <td>{{f.path}}</td>
-                                </tr>
-                            </tbody>
-                    </table>
-                </li>
-            </ul>
-        </div>
-    </div><!--//row with table-->
+    <div class="col-lg-12">
+        <ul>
+            <li data-ng-repeat="gr in report['dublicate-groups'].group">
+                <div class="list-group"></div>
+                <div class="list-group-item active">
+                    <h4 class="list-group-item-heading">
+                        <span class="badge mbadge">Имя:&nbsp;&nbsp;{{gr.name}}</span>
+                        <span class="badge mbadge pull-right">
+                            Размер:&nbsp;&nbsp;{{gr['file-size']}}       
+                        </span>
+                    </h4>
+                </div>
+                <table class="table table-hover list-group-item"
+                       data-ng-show="gr.files">
+                    <thead>
+                        <tr>
+                            <th>владелец</th>
+                            <th>last access</th>
+                            <th>Путь</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="f in gr.files.file">
+                            <td>{{f.owner}}</td>
+                            <td>{{f["last-access"]}}</td>
+                            <td>{{f.path}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div><!--//row with table-->
 </div> <!-- //main -->
 

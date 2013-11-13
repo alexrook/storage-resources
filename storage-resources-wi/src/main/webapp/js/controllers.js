@@ -6,7 +6,7 @@ angular.module('sres.controllers', []).
         controller('IdxCtrl',
                 ['$scope', 'shared',
                     function($scope, shared) {
-                        console.log('Idx ');
+                        console.log('IdxCtrl');
                         shared.addListener(function(data){
                             $scope.reportTypes=shared.getReportTypes();
                         },'reporttypes');
@@ -14,23 +14,22 @@ angular.module('sres.controllers', []).
                         shared.addListener(function(data){
                             $scope.user=shared.getUser();
                         },'user');
+                        
+                        shared.addListener(function(data){
+                            $scope.showmenu=!(shared.getState()==='userlist');
+                        },'state');
                       
                     }]).
         controller('UserCtrl',
                 ['$scope', '$http','shared',
                     function($scope, $http,shared) {
-
+                        
+                        shared.setState('userlist');
+                        
                         $scope.users = [];
 
-                        var url='',method='';
-                        if (window.urlBase) {
-                            url=window.urlBase+'/'+'rest/users';
-                            //method='jsonp'
-                        } else {
-                            url='rest/users';
-                            //method='get';
-                        }
-                        
+                        var url=(window.urlBase?window.urlBase+'/':'')+'rest/users';
+
                         $http.get(url).success(function(data) {
                             var users = data.users ? data.users : data;
                             for (var i = 0; i < users.length; i++) {
@@ -44,7 +43,8 @@ angular.module('sres.controllers', []).
                 ['$scope', '$http','$routeParams','shared',
                     function($scope, $http,$routeParams,shared) {
                         
-                        console.log($routeParams);
+                        shared.setState('reportwrapper');
+                        //console.log($routeParams);
                         
                         shared.addListener(function(){
                             $scope.report=shared.getReport();
@@ -78,15 +78,12 @@ angular.module('sres.controllers', []).
                 ['$scope', '$http','$routeParams','shared',
                     function($scope, $http,$routeParams,shared) {
                         
-                        console.log($routeParams);
+                        shared.setState('reportbody');
+                        //console.log($routeParams);
                         $scope.report={};
                         $scope.user=$routeParams.user;
-                        var url='',method='';
-                        if (window.urlBase) {
-                            url=window.urlBase+'/'+'rest/reports';
-                        } else {
-                            url='rest/reports';
-                        }
+                        
+                        var url=(window.urlBase?window.urlBase+'/':'')+'rest/reports';
                         
                         function cleanup(report){
                             if (report._type==='ByTypeFiles') {

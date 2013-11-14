@@ -17,7 +17,7 @@ public class Config {
 
         @XmlAttribute
         public String key;
-      
+
         @XmlValue
         public String value;
 
@@ -27,6 +27,10 @@ public class Config {
         public Param(String key, String value) {
             this.key = key;
             this.value = value;
+        }
+
+        public String get(String key) {
+            return (this.key.equalsIgnoreCase(key)) ? value : null;
         }
 
         @Override
@@ -54,7 +58,7 @@ public class Config {
             }
             return true;
         }
-        
+
     }
 
     private String key;
@@ -62,6 +66,27 @@ public class Config {
     private Collection<Param> params;
 
     private Collection<Config> configs;
+
+    public String getParamValue(String configKey, String paramKey) {
+
+        if (this.key.equalsIgnoreCase(configKey)) {
+            for (Param param : params) {
+                String ret = param.get(paramKey);
+                if (ret != null) {
+                    return ret;
+                }
+            }
+        } else {
+            for (Config cfg : configs) {
+                String ret = cfg.getParamValue(configKey, paramKey);
+                if (ret != null) {
+                    return ret;
+                }
+            }
+        }
+
+        return null;
+    }
 
     @XmlAttribute(name = "key")
     public String getKey() {

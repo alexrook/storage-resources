@@ -8,13 +8,16 @@ import javax.ws.rs.Path;
 import javax.ws.rs.GET;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.xml.bind.JAXBException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import storageresources.rest.App;
 
 /**
  * @author moroz
@@ -25,14 +28,24 @@ public class ReportsRS {
     @Context
     private ServletContext sctx;
 
+    @Context
+    private Application app;
+
     public ReportsRS() {
+    }
+
+    @GET
+    @Path("cfg")
+    @Produces(MediaType.APPLICATION_XML)
+    public Response getConfig() throws JAXBException {
+        return Response.ok(((App)app).getConfig()).build();
     }
 
     @GET
     @Produces("application/xml")
     public Response get(@QueryParam("user") String user,
             @QueryParam("reporttype") String reporttype) {
-        
+
         String xslfile = sctx.getInitParameter(reporttype + "-xsl"),
                 sourcefile = sctx.getInitParameter(reporttype + "-xml"),
                 configDirName = sctx.getInitParameter("config-dir");

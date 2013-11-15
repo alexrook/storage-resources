@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Hashtable;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -14,15 +13,18 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import storageresources.mo.config.Config.Param;
 
 public class XMLObjectsTest {
 
-  //  private static final Logger log = Logger.getLogger("test.XMLObjectsTest");
+    //  private static final Logger log = Logger.getLogger("test.XMLObjectsTest");
     private static final String TMP_FILE_EXT = "_XMLObjectsTest.tmp.xml";
     private Collection<User> fixtureUsers;
+    private Config testConfig;
 
     @Before
     public void fixtureForTests() {
+
         fixtureUsers = new ArrayList<User>(12);
 
         for (int i = 0; i < 12; i++) {
@@ -30,6 +32,28 @@ public class XMLObjectsTest {
             u.setName("test_" + i);
             fixtureUsers.add(u);
         }
+
+        testConfig = new Config();
+        testConfig.setKey("config_main");
+
+        Collection<Config> cfgs = new ArrayList<Config>(7);
+        for (int i = 0; i < 7; i++) {
+            Config c = new Config("config_" + i);
+            c.setParams(createTestParams("config_" + i));
+            cfgs.add(c);
+        }
+
+        testConfig.setConfigs(cfgs);
+
+    }
+
+    private Collection<Param> createTestParams(String pre) {
+        Collection<Param> ret = new ArrayList<Param>(12);
+        for (int i = 0; i < 12; i++) {
+            Param p = new Param(pre + "_param_" + i, pre + "_value_" + i);
+            ret.add(p);
+        }
+        return ret;
     }
 
     @BeforeClass
@@ -108,9 +132,9 @@ public class XMLObjectsTest {
 
             config.setKey("app");
 
-           ArrayList<Config.Param> params=new ArrayList<Config.Param>(12);
+            ArrayList<Config.Param> params = new ArrayList<Config.Param>(12);
             for (int i = 0; i < 12; i++) {
-               Config.Param param=new Config.Param("param_" + i,"param_" + i + "_value");
+                Config.Param param = new Config.Param("param_" + i, "param_" + i + "_value");
                 params.add(param);
             }
             config.setParams(params);
@@ -130,4 +154,27 @@ public class XMLObjectsTest {
             fail(e.getMessage());
         }
     }
+
+    @Test
+    public void testConfig_tdd_s2() {
+
+        try {
+            JAXBContext jc = JAXBContext.newInstance(Config.class);
+           
+            Marshaller marsh = jc.createMarshaller();
+            marsh.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
+            File uf = File.createTempFile("config_tdd_s2____", TMP_FILE_EXT);
+            markDeleteOnExtit(uf);
+            marsh.marshal(testConfig, uf);
+            
+            Unmarshaller unmarsh = jc.createUnmarshaller();
+            Config actualConfig = (Config) unmarsh.unmarshal(uf);
+            assertEquals(testConfig, actualConfig);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
 }

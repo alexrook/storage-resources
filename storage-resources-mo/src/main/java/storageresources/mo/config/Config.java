@@ -67,6 +67,14 @@ public class Config {
 
     private Collection<Config> configs;
 
+    public Config() {
+
+    }
+
+    public Config(String key) {
+        this.key=key;
+    }
+
     public String getParamValue(String configKey, String paramKey) {
 
         if (this.key.equalsIgnoreCase(configKey)) {

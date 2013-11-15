@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" data-ng-show="report['dublicate-groups'].group.length">
         <ul>
             <li data-ng-repeat="gr in report['dublicate-groups'].group">
                 <div class="list-group"></div>
@@ -30,7 +30,10 @@
                 </table>
             </li>
         </ul>
+    </div><!-- //col -->
+    <div data-ng-include src="'partials/reports/empty.html'"
+         data-ng-show="!report['dublicate-groups'].group.length">
     </div>
-</div><!--//row with table-->
-</div> <!-- //main -->
+</div><!--//row with data-->
+
 

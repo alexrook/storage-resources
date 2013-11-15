@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" data-ng-show="report.groups.group.length">
         <ul>
             <li data-ng-repeat="gr in report.groups.group" data-ng-show="gr.files">
                 <h4><span class="label label-primary">{{gr.name}}</span></h4>
@@ -23,7 +23,8 @@
                 </table>
             </li>
         </ul>
+    </div><!-- //col -->
+    <div data-ng-include src="'partials/reports/empty.html'"
+         data-ng-show="!report.groups.group[0].files">
     </div>
-</div><!--//row with table-->
-</div> <!-- //main -->
-
+</div><!--//row with data-->

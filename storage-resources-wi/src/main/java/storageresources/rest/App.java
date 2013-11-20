@@ -14,15 +14,27 @@ import storageresources.mo.config.Config;
  */
 @ApplicationPath("/rest")
 public class App extends Application {
- 
-  @Context
-  private ServletContext sctx;
-  
-  public Config getConfig() throws JAXBException{
-      JAXBContext jbctx=JAXBContext.newInstance(Config.class);
-      Config ret = (Config) jbctx.createUnmarshaller()
-              .unmarshal(new File(sctx.getInitParameter("config-dir") + "/" + sctx.getInitParameter("config-file-name")));
-      
-      return ret;
-  }
+
+    @Context
+    private ServletContext sctx;
+
+    public Config getConfig() throws JAXBException {
+        Config ret = (Config) sctx.getAttribute("app-config");
+        if (ret==null){
+            ret=loadConfig();
+            sctx.setAttribute("app-config", ret);
+        } 
+        return ret;
+    }
+
+    public String getConfigDir(){
+      return sctx.getInitParameter("config-dir");
+    }
+    
+    private Config loadConfig() throws JAXBException {
+        JAXBContext jbctx = JAXBContext.newInstance(Config.class);
+        return (Config) jbctx.createUnmarshaller()
+                .unmarshal(new File(getConfigDir()
+                        + "/" + sctx.getInitParameter("config-file-name")));
+    }
 }

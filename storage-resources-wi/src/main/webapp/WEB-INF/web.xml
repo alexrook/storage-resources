@@ -3,46 +3,15 @@
          xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-
+    <!--prod-->    
     <context-param>
         <param-name>config-dir</param-name>
         <param-value>/usr/local/etc/storage-resources</param-value>
     </context-param>
-
+   
     <context-param>
-        <param-name>users-list-file-name</param-name>
-        <param-value>users.xml</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>bigfiles-xsl</param-name>
-        <param-value>big-files.xsl</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>bigfiles-xml</param-name>
-        <param-value>big-files-source.xml</param-value>
-    </context-param>
-    
-    
-    <context-param>
-        <param-name>bytypefiles-xsl</param-name>
-        <param-value>by-type-files.xsl</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>bytypefiles-xml</param-name>
-        <param-value>by-type-files-source.xml</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>duplicatefiles-xsl</param-name>
-        <param-value>duplicate-files.xsl</param-value>
-    </context-param>
-
-    <context-param>
-        <param-name>duplicatefiles-xml</param-name>
-        <param-value>duplicate-files-source.xml</param-value>
+        <param-name>config-file-name</param-name>
+        <param-value>config.xml</param-value>
     </context-param>
 
     <!-- 

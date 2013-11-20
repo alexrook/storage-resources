@@ -72,23 +72,25 @@ public class Config {
     }
 
     public Config(String key) {
-        this.key=key;
+        this.key = key;
     }
 
     public String getParamValue(String configKey, String paramKey) {
 
-        if (this.key.equalsIgnoreCase(configKey)) {
+        if (key.equalsIgnoreCase(configKey)) {//search own
             for (Param param : params) {
                 String ret = param.get(paramKey);
                 if (ret != null) {
                     return ret;
                 }
             }
-        } else {
-            for (Config cfg : configs) {
-                String ret = cfg.getParamValue(configKey, paramKey);
-                if (ret != null) {
-                    return ret;
+        } else {//search in tree
+            if (configs != null) {
+                for (Config cfg : configs) {
+                    String ret = cfg.getParamValue(configKey, paramKey);
+                    if (ret != null) {
+                        return ret;
+                    }
                 }
             }
         }

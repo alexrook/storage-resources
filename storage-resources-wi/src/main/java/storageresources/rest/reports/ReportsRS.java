@@ -25,8 +25,7 @@ import storageresources.rest.App;
 @Path("reports")
 public class ReportsRS {
 
-    @Context
-    private ServletContext sctx;
+    public static final String CFG_KEY = "reports-rs";
 
     @Context
     private Application app;
@@ -38,7 +37,7 @@ public class ReportsRS {
     @Path("cfg")
     @Produces(MediaType.APPLICATION_XML)
     public Response getConfig() throws JAXBException {
-        return Response.ok(((App)app).getConfig()).build();
+        return Response.ok(((App) app).getConfig()).build();
     }
 
     @GET
@@ -46,15 +45,18 @@ public class ReportsRS {
     public Response get(@QueryParam("user") String user,
             @QueryParam("reporttype") String reporttype) {
 
-        String xslfile = sctx.getInitParameter(reporttype + "-xsl"),
-                sourcefile = sctx.getInitParameter(reporttype + "-xml"),
-                configDirName = sctx.getInitParameter("config-dir");
         try {
+            String xslfile = getConfigParam(reporttype + "-xsl"),
+                    sourcefile = getConfigParam(reporttype + "-xml"),
+                    configDirName = ((App) app).getConfigDir();
+
             StringWriter result = new StringWriter(300);
+
             TransformerFactory tf = TransformerFactory.newInstance();
             Transformer t = tf.newTransformer(new StreamSource(new File(configDirName + "/" + xslfile)));
             t.setParameter("UserName", user);
             t.setOutputProperty(OutputKeys.INDENT, "yes");
+
             t.transform(new StreamSource(new File(configDirName + "/" + sourcefile)),
                     new StreamResult(result));
 
@@ -65,4 +67,7 @@ public class ReportsRS {
         }
     }
 
+    private String getConfigParam(String paramKey) throws JAXBException {
+        return ((App) app).getConfig().getParamValue(CFG_KEY, paramKey);
+    }
 }

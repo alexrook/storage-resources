@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config key="main">
+    <configs>
+        <config key="reports-rs">
+            <params>
+                <param key="bigfiles-xsl">big-files.xsl</param>
+                <param key="bigfiles-xml">big-files-source.xml</param>
+                <param key="bytypefiles-xsl">by-type-files.xsl</param>
+                <param key="bytypefiles-xml">by-type-files-source.xml</param>
+                <param key="duplicatefiles-xsl">duplicate-files.xsl</param>
+                <param key="duplicatefiles-xml">duplicate-files-source.xml</param>
+            </params>
+        </config>
+	<config key="users-rs">
+            <params>
+                <param key="users-list-file-name">users.xml</param>
+            </params>
+        </config>
+    </configs>
+</config>

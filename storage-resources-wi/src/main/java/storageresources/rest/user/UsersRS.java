@@ -1,7 +1,6 @@
 package storageresources.rest.user;
 
 import java.io.File;
-import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;
@@ -13,7 +12,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import storageresources.mo.UsersList;
 import storageresources.rest.App;
-import static storageresources.rest.reports.ReportsRS.CFG_KEY;
 
 /**
  * @author moroz

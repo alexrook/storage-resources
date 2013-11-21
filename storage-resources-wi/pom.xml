@@ -62,13 +62,12 @@
             <build>
                 <finalName>storage-resources</finalName>
                 <plugins>
-                     <plugin>
+                    <plugin>
                         <artifactId>maven-war-plugin</artifactId>
                         <configuration>
                             <warSourceExcludes>debug.js</warSourceExcludes>
                         </configuration>
                     </plugin>
-
                 </plugins>
             </build>
         </profile>

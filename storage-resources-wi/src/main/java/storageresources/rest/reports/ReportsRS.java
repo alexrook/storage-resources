@@ -2,7 +2,6 @@ package storageresources.rest.reports;
 
 import java.io.File;
 import java.io.StringWriter;
-import javax.servlet.ServletContext;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.Path;
 import javax.ws.rs.GET;

@@ -12,7 +12,7 @@ import storageresources.mo.StreamSourceEx.DateKey;
 public class StreamSourceExTest {
 
     private static final Logger log = Logger.getLogger("test.StreamSourceExTest");
-   
+
     @Test
     public void test_DD_DateKey() {
         DateKey dk00 = new StreamSourceEx.DateKey();
@@ -48,5 +48,12 @@ public class StreamSourceExTest {
             fail(e.getMessage());
         }
 
+    }
+
+    @Test(expected = IOException.class)
+    public void test_DD_DateKey_00() throws IOException {
+        DateKey dk00 = new StreamSourceEx.DateKey();
+        dk00.setParams(new String[]{"yyyy-MM-dd"});
+        dk00.parse("oiwjdewed 1967-03-22"); // io error here
     }
 }

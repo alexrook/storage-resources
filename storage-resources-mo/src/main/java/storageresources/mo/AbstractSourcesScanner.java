@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.TreeMap;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -16,7 +17,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author moroz
  * @param <T>
  */
-public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
+public abstract class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
 
     private final TreeMap<T, StreamSourceEx<T>> sources = new TreeMap<T, StreamSourceEx<T>>();
     private final Queue<SourceChecker> checkers = new LinkedList<SourceChecker>();
@@ -64,10 +65,10 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
 
         @Override
         public boolean check() {
-            String rawFragment = source.getSystemIdUri().getRawFragment();
+            String date = source.getSystemIdUri()
+                    .getPath().substring(keyStartPosition);
             try {
-
-                key.parse(rawFragment.substring(keyStartPosition));
+                key.parse(date);
 
                 source.setKey(key);
 
@@ -110,7 +111,7 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
                 if (candidate.matches(pattern)) {
                     source.addProperty(paramName, candidate);
                     checkRet = true;
-                } else {
+                } else {//last param wins
                     source.delProperty(paramName);
                     checkRet = false;
                 }
@@ -119,9 +120,10 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
 
         @Override
         public boolean check() throws IOException {
+            InputStream is = null;
             try {
 
-                InputStream is = source.getInputStream();
+                is = source.getInputStream();
 
                 if (is == null) {
                     is = new URL(source.getSystemId()).openStream();
@@ -129,8 +131,14 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 SAXParser parser = factory.newSAXParser();
                 parser.parse(is, this);
+
+                is.close();
                 return checkRet;
             } catch (Exception ex) {
+                if (is != null) {
+                    is.close();
+                }
+
                 throw new IOException("check error", ex);
             }
         }
@@ -163,7 +171,7 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
                     if (source.getKey() == null) {//does not override previous key
                         source.setKey(key);
                     }
-                    checkRet = false;
+                    checkRet = true;
                 } catch (IOException e) {
                     checkRet = false;
                 }
@@ -193,6 +201,9 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
 
     protected void check(StreamSourceEx<T> source) throws IOException {
         for (SourceChecker checker : checkers) {
+
+            checker.setSource(source);
+
             if (!checker.check()) {
                 break;
             }
@@ -201,4 +212,16 @@ public class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
             addSource(source);
         }
     }
+
+    public int sourcesSize() {
+        return sources.size();
+    }
+
+    public Set<T> sourcesKeySet() {
+        return sources.keySet();
+    }
+
+    public abstract void setParams(String[] params);
+
+    public abstract void scan() throws IOException;
 }

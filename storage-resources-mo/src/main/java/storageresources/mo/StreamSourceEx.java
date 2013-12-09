@@ -18,7 +18,7 @@ public class StreamSourceEx<T extends Key> extends StreamSource {
 
     public interface Key<T> extends Comparable<Key<T>> {
 
-        void parse(String value) throws IOException;
+        Key<T> parse(String value) throws IOException;
 
         void setParams(String[] params);
 
@@ -30,10 +30,24 @@ public class StreamSourceEx<T extends Key> extends StreamSource {
         private Date keyval;
         private String pattern;
 
+        public DateKey() {
+
+        }
+
+        public DateKey(Date keyval) {
+            this.keyval = keyval;
+        }
+
         @Override
-        public void parse(String value) throws IOException {
+        public Key<Date> parse(String value) throws IOException {
             try {
                 keyval = (new SimpleDateFormat(pattern)).parse(value);
+
+                DateKey ret = new DateKey(keyval);
+
+                ret.setParams(new String[]{pattern});
+
+                return ret;
             } catch (ParseException ex) {
                 throw new IOException("date key parse exception", ex);
             }

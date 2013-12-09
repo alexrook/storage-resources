@@ -15,6 +15,40 @@ import storageresources.mo.StreamSourceEx.*;
  */
 public class AbstractSourceScannerTest {
 
+    public static class StringKey implements StreamSourceEx.Key<String> {
+
+        String val;
+
+        @Override
+        public Key<String> parse(String value) throws IOException {
+            val = value;
+            return new StringKey(value);
+        }
+
+        public StringKey() {
+
+        }
+
+        public StringKey(String value) {
+            val = value;
+        }
+
+        @Override
+        public void setParams(String[] params) {
+            //noop
+        }
+
+        @Override
+        public String getValue() {
+            return val;
+        }
+
+        @Override
+        public int compareTo(Key<String> o) {
+            return val.compareTo(o.getValue());
+        }
+
+    }
     private static final Logger log
             = Logger.getLogger("test.AbstractSourceScannerTest");
 
@@ -107,31 +141,8 @@ public class AbstractSourceScannerTest {
 
     @Test
     public void test_DD_Scanner() throws IOException {
-        Key<String> key =new Key<String>() {
-            String val;
-           
-            @Override
-            public void parse(String value) throws IOException {
-                val=value;
-            }
-
-            @Override
-            public void setParams(String[] params) {
-                //noop
-            }
-
-            @Override
-            public String getValue() {
-               return val;
-            }
-
-            @Override
-            public int compareTo(Key<String> o) {
-                return val.compareTo(o.getValue());
-            }
-
-         
-        };
+        Key<String> key = new StringKey();
+     
 
         AbstractSourcesScanner<Key<String>> scanner
                 = new AbstractSourcesScanner<Key<String>>() {
@@ -166,7 +177,6 @@ public class AbstractSourceScannerTest {
         KeyInStreamSourceChecker<Key<String>> kinsc
                 = new KeyInStreamSourceChecker<Key<String>>();
 
-        
         kinsc.setKey(key);
         kinsc.setParams(new String[]{"Type", ".*"});
 
@@ -179,6 +189,8 @@ public class AbstractSourceScannerTest {
         assertNotNull(scanner.getLatestSource().getKey());
         log.info("latest source key = " + scanner.getLatestSource().getKey().getValue());
         log.info("sources size = " + scanner.sourcesSize());//
+        assertTrue(scanner.sourcesSize()>1);
+        assertTrue(scanner.sourcesKeySet().size()>1);
 
     }
 }

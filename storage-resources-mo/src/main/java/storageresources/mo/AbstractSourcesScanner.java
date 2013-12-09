@@ -68,9 +68,9 @@ public abstract class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
             String date = source.getSystemIdUri()
                     .getPath().substring(keyStartPosition);
             try {
-                key.parse(date);
+                //   StreamSourceEx.Key nKey=key.parse(date);
 
-                source.setKey(key);
+                source.setKey( (T) key.parse(date));
 
                 return true;
             } catch (IOException e) {
@@ -167,9 +167,9 @@ public abstract class AbstractSourcesScanner<T extends StreamSourceEx.Key> {
             String candidate = attributes.getValue(paramName);
             if (candidate != null) {
                 try {
-                    key.parse(candidate);
+                    // StreamSourceEx.Key nKey=key.parse(candidate);
                     if (source.getKey() == null) {//does not override previous key
-                        source.setKey(key);
+                        source.setKey(key.parse(candidate));
                     }
                     checkRet = true;
                 } catch (IOException e) {
